@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   GraduationCap, Users, MapPin, BookOpen, ChevronLeft, ChevronRight, Quote,
   ArrowRight, Award, Building2, Target, Globe, Briefcase, Clock, FileText,
-  CheckCircle, Phone, Mail, Send,
+  CheckCircle, Phone, Mail, Send, Instagram, Facebook, Twitter, Linkedin, Youtube,
 } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import AnimatedCounter from "@/components/AnimatedCounter";
@@ -42,11 +42,31 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
         </motion.div>
       </AnimatePresence>
-      <div className="absolute left-6 top-6 z-20">
-        <div className="inline-flex rounded-2xl p-0.5">
-          <img src={logo} alt="IIDL Logo" className="h-[110px] w-[110px] md:h-[130px] md:w-[130px] lg:h-[150px] lg:w-[150px] object-contain" />
+      <header className="absolute left-0 top-0 z-20 w-full bg-white/95 backdrop-blur-sm border-b border-black/5">
+        <div className="container-main px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between">
+          <div className="inline-flex rounded-2xl p-0.5">
+            <img src={logo} alt="IIDL Logo" className="h-[46px] w-[46px] sm:h-[54px] sm:w-[54px] lg:h-[64px] lg:w-[64px] object-contain" />
+          </div>
+          <div className="flex items-center gap-3 sm:gap-4">
+            {[
+              { label: "Instagram", Icon: Instagram, href: "https://www.instagram.com/" },
+              { label: "Facebook", Icon: Facebook, href: "https://www.facebook.com/" },
+              { label: "Twitter", Icon: Twitter, href: "https://x.com/iidlpgp" },
+              { label: "LinkedIn", Icon: Linkedin, href: "https://in.linkedin.com/school/iidlpgp/" },
+              { label: "YouTube", Icon: Youtube, href: "https://www.youtube.com/" },
+            ].map(({ label, Icon, href }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-foreground/5 text-foreground flex items-center justify-center border border-foreground/10 hover:bg-foreground/10 transition-colors"
+              >
+                <Icon className="w-3.5 h-3.5" />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      </header>
       <div className="relative z-10 h-full flex items-center">
         <div className="container-main px-4 sm:px-6 lg:px-8">
           <motion.div key={`t-${current}`} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="max-w-2xl">
