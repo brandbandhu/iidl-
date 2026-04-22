@@ -12,7 +12,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <img src={logo} alt="IIDL" className="h-12 w-12 object-contain bg-primary-foreground/10 rounded-lg p-1" />
+            <img src={logo} alt="IIDL" className="h-14 w-auto object-contain rounded-lg bg-primary-foreground/10 px-2 py-1" />
             <div>
               <p className="font-heading text-lg font-bold">IIDL</p>
               <p className="text-xs text-primary-foreground/70">Indian Institute of Democratic Leadership</p>
