@@ -7,9 +7,11 @@ import {
 } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import ApplyNowModal from "@/components/ApplyNowModal";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
+import { onApplyNowModalOpen, openApplyNowModal } from "@/lib/applyNow";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -42,10 +44,10 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
         </motion.div>
       </AnimatePresence>
-      <header className="absolute left-0 top-0 z-20 w-full bg-white/95 backdrop-blur-sm border-b border-black/5">
-        <div className="container-main px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between">
+      <header className="absolute left-0 top-0 z-20 w-full border-b border-black/5 bg-white/95 backdrop-blur-sm">
+        <div className="container-main flex items-center justify-between px-4 py-2 sm:px-6 sm:py-3 lg:px-8">
           <div className="inline-flex rounded-2xl p-0.5">
-            <img src={logo} alt="IIDL Logo" className="h-[46px] w-[46px] sm:h-[54px] sm:w-[54px] lg:h-[64px] lg:w-[64px] object-contain" />
+            <img src={logo} alt="IIDL Logo" className="h-[52px] w-auto sm:h-[64px] lg:h-[76px] object-contain" />
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
             {[
@@ -74,7 +76,7 @@ const HeroSection = () => {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">{slides[current].title}</h1>
             <p className="text-lg text-primary-foreground/80 mb-8">{slides[current].subtitle}</p>
             <div className="flex flex-wrap gap-4">
-              <button onClick={() => scrollTo("#admissions")} className="gradient-gold text-foreground px-8 py-3.5 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center gap-2">
+              <button onClick={openApplyNowModal} className="gradient-gold text-foreground px-8 py-3.5 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center gap-2">
                 Apply Now <ArrowRight className="w-4 h-4" />
               </button>
               <button onClick={() => scrollTo("#programme")} className="border-2 border-primary-foreground/30 text-primary-foreground px-8 py-3.5 rounded-lg font-semibold hover:bg-primary-foreground/10 transition-colors">
@@ -351,9 +353,9 @@ const AdmissionsSection = () => (
           ))}
         </div>
         <div className="text-center mt-12">
-          <a href="https://iidl.org.in/apply-now" target="_blank" rel="noopener noreferrer" className="gradient-maroon text-primary-foreground px-10 py-4 rounded-lg font-semibold text-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <button onClick={openApplyNowModal} className="gradient-maroon text-primary-foreground px-10 py-4 rounded-lg font-semibold text-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
             Apply Now <ArrowRight className="w-5 h-5" />
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -616,7 +618,7 @@ const FinalCTA = () => (
       <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">Ready to Begin Your Leadership Journey?</h2>
         <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto">Limited to 30 seats per batch. Applications for PGP-LPG 2026-27 are now open.</p>
-        <button onClick={() => scrollTo("#admissions")} className="gradient-gold text-foreground px-10 py-4 rounded-lg font-semibold text-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <button onClick={openApplyNowModal} className="gradient-gold text-foreground px-10 py-4 rounded-lg font-semibold text-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
           Apply Now <ArrowRight className="w-5 h-5" />
         </button>
       </motion.div>
@@ -625,20 +627,30 @@ const FinalCTA = () => (
 );
 
 /* ═══════════════ LANDING PAGE ═══════════════ */
-const LandingPage = () => (
-  <>
-    <HeroSection />
-    <StatsStrip />
-    <AboutSection />
-    <WhyIIDL />
-    <ProgrammeSection />
-    <CurriculumSection />
-    <AdmissionsSection />
-    <AlumniSection />
-    <LeadCapture />
-    <ContactSection />
-    <FinalCTA />
-  </>
-);
+const LandingPage = () => {
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onApplyNowModalOpen(() => setIsApplyModalOpen(true));
+    return unsubscribe;
+  }, []);
+
+  return (
+    <>
+      <HeroSection />
+      <StatsStrip />
+      <AboutSection />
+      <WhyIIDL />
+      <ProgrammeSection />
+      <CurriculumSection />
+      <AdmissionsSection />
+      <AlumniSection />
+      <LeadCapture />
+      <ContactSection />
+      <FinalCTA />
+      <ApplyNowModal open={isApplyModalOpen} onOpenChange={setIsApplyModalOpen} />
+    </>
+  );
+};
 
 export default LandingPage;
